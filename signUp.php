@@ -8,7 +8,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
     $country_id=$_POST['countries'];
     $password=$_POST['password'];
 
-    $image=$_POST['image'][0];;//$_FILES['image']['tmp_name'];
+    $image=$_FILES['image']['tmp_name'];
     echo("<script>console.log('PHP: " . $image . "');</script>");
     $dir_save='images/';
     $image_name=uniqid().'.png';
@@ -116,8 +116,8 @@ $countries = $stm->fetchAll();
         <?php
             //include($_SERVER['DOCUMENT_ROOT'] . '/components/cropper.php');
         ?>
-        <label for="image"></label>
-        <input type="image" name="image" id="image">
+        <label for="image" class="form-label"></label>
+        <input type="file" class="form-control" name="image" id="image">
     </div>
     <button type="submit" class="btn btn-primary">Sumbit</button>
 </form>

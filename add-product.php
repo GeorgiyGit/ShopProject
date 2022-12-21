@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $description = $_POST['description'];
 
     include_once($_SERVER['DOCUMENT_ROOT'] . '/options/connection_database.php');
-    $sql = 'INSERT INTO tbl_products (name, price, creation_time, description, owner_id) VALUES (:name, :price, NOW(), :description,3);';
+    $sql = 'INSERT INTO tbl_products (name, price, creation_time, description, owner_id) VALUES (:name, :price, NOW(), :description,5);';
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':name', $name);
     $stmt->bindParam(':price', $price);
