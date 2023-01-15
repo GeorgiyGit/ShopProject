@@ -12,11 +12,13 @@
 <?php
 include($_SERVER['DOCUMENT_ROOT'] . '/components/header.php');
 include($_SERVER["DOCUMENT_ROOT"] . '/options/connection_database.php');
+//load id from route
 $id=$_GET['id'];
 $name='';
 $price = '';
 $description='';
 
+//select product with this id
 $sql="SELECT * FROM tbl_products where id=:id";
 $stm=$conn->prepare($sql);
 $stm->execute([':id'=>$id]);
@@ -27,6 +29,7 @@ if($row = $stm->fetch()){
     $description = $row['description'];
 }
 
+//select current product`s images
 $sql="select name from tbl_images 
       where product_id=:id 
       order by priority";
@@ -87,6 +90,8 @@ $images = $stm->fetchAll();
             }
         });
     }
+
+    //change ccurent image, when we click on another one.
     function change_image(image){
 
         var container = document.getElementById("main-image");

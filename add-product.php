@@ -1,10 +1,12 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    //load data from form
     echo "POST REQUEST SERVER";
     $name = $_POST['name'];
     $price = $_POST['price'];
     $description = $_POST['description'];
 
+    //save product
     include_once($_SERVER['DOCUMENT_ROOT'] . '/options/connection_database.php');
     $sql = 'INSERT INTO tbl_products (name, price, creation_time, description, owner_id) VALUES (:name, :price, NOW(), :description,5);';
     $stmt = $conn->prepare($sql);
@@ -17,6 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $images = $_POST['images'];
     $count=1;
+    //save images
     foreach ($images as $base64) {
         $dir_save = 'images/';
         $image_name = uniqid() . '.png';
@@ -91,12 +94,14 @@ include($_SERVER['DOCUMENT_ROOT'] . '/components/header.php');
 <script src="library/js/bootstrap.js"></script>
 <script src="library/js/jquery-3.6.2.min.js"></script>
 <script>
+    //function for creating unique id
     function uuidv4() {
         return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
             (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
         );
     }
 
+    //Add images
     $(function () {
         const image = document.getElementById('image');
 
@@ -110,6 +115,7 @@ include($_SERVER['DOCUMENT_ROOT'] . '/components/header.php');
                     const base64 = reader.result;
 
                     const id = uuidv4();
+                    //draw images
                     const data = `
                         <div class="row">
                             <div class="col-6">
@@ -146,6 +152,7 @@ include($_SERVER['DOCUMENT_ROOT'] . '/components/header.php');
         }
 
 
+        //remove image from images
         $("#list_images").on("click", '.remove', function () {
             $(this).closest(".item-image").remove();
         });
@@ -157,6 +164,7 @@ include($_SERVER['DOCUMENT_ROOT'] . '/components/header.php');
             document.getElementById(`${edit_id}_image`).src = base64;
             document.getElementById(`${edit_id}_file`).value = base64;
         });
+        //edit image
         $("#list_images").on("change", '.edit', function (e) {
             edit_id = e.target.id;
             const file = e.target.files[0];

@@ -1,6 +1,7 @@
 <?php
 if($_SERVER['REQUEST_METHOD']=='POST')
 {
+    //load data from form
     $firstName=$_POST['firstName'];
     $lastName=$_POST['lastName'];
     $phone=$_POST['phone'];
@@ -8,6 +9,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
     $country_id=$_POST['countries'];
     $password=$_POST['password'];
 
+    //save image
     $image=$_FILES['image']['tmp_name'];
     echo("<script>console.log('PHP: " . $image . "');</script>");
     $dir_save='images/';
@@ -18,6 +20,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
         $image_name = uniqid() . '.png';
         $priority=1;
 
+        //save image to db
         include_once($_SERVER['DOCUMENT_ROOT'] . '/options/connection_database.php');
         $sql = 'INSERT INTO tbl_images (name, creation_time, priority) VALUES(:name, NOW(), :priority);';
         $stmt = $conn->prepare($sql);
@@ -25,6 +28,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
         $stmt->bindParam(':priority', $priority);
         $stmt->execute();
 
+        //logs
         $insert_id=$conn->lastInsertId();
         echo("<script>console.log('PHP: " . $firstName . "');</script>");
         echo("<script>console.log('PHP: " . $lastName . "');</script>");
@@ -32,6 +36,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
         echo("<script>console.log('PHP: " . $password . "');</script>");
         echo("<script>console.log('PHP: " . $insert_id . "');</script>");
 
+        //save user to db
         include_once($_SERVER['DOCUMENT_ROOT'] . '/options/connection_database.php');
         $sql="INSERT INTO tbl_users (firstName, lastName, phone,email,password,image_id,country_id) VALUES (:firstName, :lastName, :phone, :email, :password,:image_id,:country_id);";
         $stmt= $conn->prepare($sql);
@@ -107,7 +112,7 @@ $countries = $stm->fetchAll();
         <label for="countries">Choose a country:</label>
         <select name="countries" id="countries" class="form-select">
             <?php foreach ($countries as $c){
-                echo'<option value="'.$c['id'].'">'.$c['name'].'</option>';
+                echo'<option value="'.$c['id'].'">'.$c['name'].'</option>';//view list of countries which are loading from db
             }?>
         </select>
         <br><br>

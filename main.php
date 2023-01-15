@@ -19,14 +19,14 @@ include($_SERVER["DOCUMENT_ROOT"] . '/options/connection_database.php');
             <?php
             $sql="SELECT p.id, p.name, p.price, img.name as image 
                   FROM tbl_products as p, tbl_images as img 
-                  where p.id=img.product_id and img.priority=1";
+                  where p.id=img.product_id and img.priority=1";//select products with images
             foreach ($conn->query($sql) as $row) {
                 $id=$row['id'];
                 $name=$row['name'];
                 $image=$row['image'];
                 $price=$row['price'];
                 $images = $row['image'];
-                //print_r([$id, $name, $image, $price]);
+                //print_r([$id, $name, $image, $price]);//view project cards
                 echo '
             <div class="col-md-6 col-lg-4 mb-4 mb-md-0">
                 <div class="card">
@@ -88,6 +88,7 @@ include($_SERVER["DOCUMENT_ROOT"] . '/options/connection_database.php');
 
 <script>
     function loadData(id) {
+        //view details for project by id
         $.ajax({
             url: "details.php",
             method: "POST",
