@@ -40,8 +40,8 @@ include($_SERVER["DOCUMENT_ROOT"] . '/options/connection_database.php');
                         </div>
 
                         <div class="mb-2 text-end">
-                            <button type="button" class="btn btn-success">Buy</button>
                             <a href="details.php?id='.$id.'" class="btn btn-secondary">Details</a>
+                            <a href="edit.php?id='.$id.'" class="btn btn-secondary">Edit</a>
                         </div>
                         
                     </div>
